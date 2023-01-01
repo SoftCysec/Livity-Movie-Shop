@@ -1,0 +1,22 @@
+<!-- movie_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Movie List</h1>
+
+  <div class="row">
+    {% for movie in movies %}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img src="{{ movie.poster_image }}" class="card-img-top" alt="{{ movie.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text">{{ movie.plot_summary }}</p>
+            <a href="#" class="btn btn-primary">Learn more</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
