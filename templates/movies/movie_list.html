@@ -3,34 +3,11 @@
   <style>
     .card {
       height: 400px;
-      position: relative;
     }
     
     .card img {
       height: 200px;
       object-fit: cover;
-    }
-    
-    .card .overview {
-      max-height: 200px;
-      overflow: hidden;
-      transition: max-height 0.5s ease-out;
-    }
-    
-    .card .overview.expanded {
-      max-height: none;
-    }
-    
-    .card .view-more-btn {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-    }
-    
-    .card:hover .view-more-btn {
-      display: block;
     }
   </style>
   <div class="container">
@@ -41,13 +18,7 @@
             <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{ movie.title }}</h5>
-              <div class="card-text" id="overview-{{ movie.id }}">
-                {% if movie.overview|length > 50 %}
-                <a href="#" class="btn btn-primary view-more-btn" onclick="toggleOverview({{ movie.id }})">View more</a>
-                {% else %}
-                  {{ movie.overview }}
-                {% endif %}
-              </div>
+              <p class="card-text">{{ movie.overview }}</p>
             </div>
           </div>
         </div>
@@ -69,12 +40,4 @@
       </ul>
     </nav>
   </div>
-  
-  <script>
-    function toggleOverview(id) {
-      var overviewElement = document.getElementById(`overview-${id}`);
-      overviewElement.classList.toggle('expanded');
-    }
-  </script>
-  
 {% endblock %}
