@@ -17,8 +17,15 @@
           <div class="card mb-3">
             <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.overview }}</p>
+              <h5 class="card-title" style="font-weight: bolder;">{{ movie.title }}</h5>
+              <div class="card-text" id="overview-{{ movie.id }}">
+                {% if movie.overview|length > 48 %}
+                  {{ movie.overview|slice:" 48" }}...
+                  <a href="#" class="btn btn-primary" onclick="showOverview({{ movie.id }})">View more</a>
+                {% else %}
+                  {{ movie.overview }}
+                {% endif %}
+              </div>
             </div>
           </div>
         </div>
@@ -40,4 +47,11 @@
       </ul>
     </nav>
   </div>
+  
+  <script>
+    function showOverview(movieId) {
+      var overview = document.getElementById(`overview-${movieId}`);
+      overview.innerHTML = `{{ movie.overview }}`;
+    }
+  </script>
 {% endblock %}
