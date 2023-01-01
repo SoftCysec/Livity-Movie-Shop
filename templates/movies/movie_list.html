@@ -1,18 +1,80 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h1>Popular Movies</h1>
-  <div class="row">
-    {% for movie in movies %}
-      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-        <div class="card h-100">
-          <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster" class="card-img-top">
-          <div class="card-body">
-            <h5 class="card-title">{{ movie.title }}</h5>
-            <p class="card-text">{{ movie.overview }}</p>
+  <style>
+    .card {
+      height: 400px;
+      position: relative;
+    }
+    
+    .card img {
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .card .overview {
+      max-height: 200px;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+    }
+    
+    .card .overview.expanded {
+      max-height: none;
+    }
+    
+    .card .view-more-btn {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
+    
+    .card:hover .view-more-btn {
+      display: block;
+    }
+  </style>
+  <div class="container">
+    <div class="row">
+      {% for movie in movies %}
+        <div class="col-md-3">
+          <div class="card mb-3">
+            <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <div class="card-text" id="overview-{{ movie.id }}">
+                {% if movie.overview|length > 50 %}
+                <a href="#" class="btn btn-primary view-more-btn" onclick="toggleOverview({{ movie.id }})">View more</a>
+                {% else %}
+                  {{ movie.overview }}
+                {% endif %}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if previous_page > 0 %}
+          <li class="page-item"><a class="page-link" href="?page={{ previous_page }}">Previous</a></li>
+        {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="#">{{ movies.number }}</a></li>
+        {% if next_page <= movies.paginator.num_pages %}
+          <li class="page-item"><a class="page-link" href="?page={{ next_page }}">Next</a></li>
+        {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
   </div>
+  
+  <script>
+    function toggleOverview(id) {
+      var overviewElement = document.getElementById(`overview-${id}`);
+      overviewElement.classList.toggle('expanded');
+    }
+  </script>
+  
 {% endblock %}

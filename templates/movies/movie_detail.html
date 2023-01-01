@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ movie.title }}</h1>
+  <div class="row">
+    <div class="col-md-3">
+      <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster" class="img-fluid">
+    </div>
+    <div class="col-md-9">
+      <p>{{ movie.overview }}</p>
+      <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+      <p><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
+      <p><strong>Genres:</strong> {% for genre in movie.genres %}{{ genre.name }} {% if not forloop.last %}, {% endif %}{% endfor %}</p>
+      <p><strong>Cast:</strong> {% for actor in movie.credits.cast %}{{ actor.name }} {% if not forloop.last %}, {% endif %}{% endfor %}</p>
+      <p><strong>Director:</strong> {% for crew in movie.credits.crew %}{% if crew.job == "Director" %}{{ crew.name }}{% endif %}{% endfor %}</p>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-12">
+      <h2>Trailer</h2>
+      {% if movie.videos.results %}
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe src="https://www.youtube.com/embed/{{ movie.videos.results.0.key }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      {% else %}
+        <p>No trailer available.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
