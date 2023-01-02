@@ -1,21 +1,43 @@
 import requests
 import os
 
-def get_movies_from_api(page=1):
-    api_key = os.environ['TMDB_API_KEY']
-    api_url = f"https://api.themoviedb.org/3/movie/popular?api_key={api_key}&page={page}"
-    response = requests.get(api_url)
-    return response.json()
+# TMDB API configuration
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
+TMDB_API_URL = 'https://api.themoviedb.org/3'
 
-def get_movie_from_api(movie_id):
-    api_key = os.environ['TMDB_API_KEY']
-    api_url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}"
-    response = requests.get(api_url)
-    return response.json()
+class TmdbApi:
+  def search_movies(self, query):
+    """Searches for movies using the TMDB API."""
+    params = {
+      'api_key': TMDB_API_KEY,
+      'query': query,
+    }
+    r = requests.get(f'{TMDB_API_URL}/search/movie', params=params)
+    if r.status_code == 200:
+      return r.json()['results']
+    return []
 
+  def get_popular_movies(self, page=1):
+    """Gets the popular movies from the TMDB API."""
+    params = {
+      'api_key': TMDB_API_KEY,
+      'page': page,
+    }
+    r = requests.get(f'{TMDB_API_URL}/movie/popular', params=params)
+    if r.status_code == 200:
+      data = r.json()
+      return data['results'], data['total_pages']
+    return [], 0
 
-def search_movies(query, page=1):
-    api_key = os.environ['TMDB_API_KEY']
-    api_url = f"https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={query}&page={page}"
-    response = requests.get(api_url)
-    return response.json()
+  def get_movie(self, movie_id):
+    """Gets the details of a movie from the TMDB API."""
+    params = {
+      'api_key': TMDB_API_KEY,
+    }
+    r = requests.get(f'{TMDB_API_URL}/movie/{movie_id}', params=params)
+    if r.status_code == 200:
+      return r.json()
+    return {}
+
+# Create a singleton instance of the TmdbApi class
+tmdb_api = TmdbApi()

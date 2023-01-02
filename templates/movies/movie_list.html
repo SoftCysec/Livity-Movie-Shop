@@ -21,7 +21,7 @@
               <div class="card-text" id="overview-{{ movie.id }}">
                 {% if movie.overview|length > 48 %}
                   {{ movie.overview|slice:" 48" }}...
-                  <a href="#" class="btn btn-primary" onclick="showOverview({{ movie.id }})">View more</a>
+                  <a href="{% url 'myapp:movie_detail' movie.id %}" class="btn btn-primary" onclick="showOverview({{ movie.id }})">View more</a>
                 {% else %}
                   {{ movie.overview }}
                 {% endif %}

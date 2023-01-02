@@ -1,12 +1,14 @@
 <!-- index.html -->
 
 {% extends 'base.html' %}
-
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock extra_css %}
 {% block content %}
   <h1>Welcome to Movie Shop</h1>
   <p>Here you can browse and purchase the latest movies from your favorite actors and directors.</p>
-
-  <form action="{% url 'search' %}" method="get">
+  <form action="{% url 'myapp:search' %}" method="get">
     <input type="text" name="query" placeholder="Search for a movie...">
     <button type="submit">Search</button>
   </form>

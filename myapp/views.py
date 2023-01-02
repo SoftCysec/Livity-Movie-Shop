@@ -1,42 +1,68 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator
-from .utils import get_movies_from_api, get_movie_from_api, search_movies
+from django.shortcuts import render, redirect
+from django.contrib import messages
+import requests
+import os
+
+from .utils import tmdb_api
 
 def index(request):
-    return render(request, 'movies/index.html')
+  return render(request, 'movies/index.html')
 
 def about(request):
-    return render(request, 'movies/about.html')
+  return render(request, 'movies/about.html')
 
 def contact(request):
-    return render(request, 'movies/contact.html')
+  return render(request, 'movies/contact.html')
 
 def search(request):
-    query = request.GET.get('query')
-    movies = search_movies(query)
-    context = {
-        'movies': movies,
-    }
-    return render(request, 'movies/search_results.html', context)
+  query = request.GET.get('query')
+  if not query:
+    return redirect('myapp:movie_list')
+  
+  # Search for the movie using the TMDB API
+  movies = tmdb_api.search_movies(query)
+  
+  if not movies:
+    messages.error(request, 'No movies found')
+    return redirect('myapp:movie_list')
+  
+  # Redirect to the movie detail page if a single movie is found
+  if len(movies) == 1:
+    return redirect('myapp:movie_detail', movie_id=movies[0]['id'])
+  
+  # Otherwise, display a list of movies
+  return render(request, 'movies/movie_list.html', {'movies': movies})
 
 def movie_list(request):
-    try:
-        page = int(request.GET.get('page'))
-    except (TypeError, ValueError):
-        page = 1
-    movies = get_movies_from_api(page)
-    paginator = Paginator(movies['results'], 20)
-    movies = paginator.page(page)
-    context = {
-        'movies': movies,
-        'previous_page': movies.number - 1,
-        'next_page': movies.number + 1,
-    }
-    return render(request, 'movies/movie_list.html', context)
+  page = request.GET.get('page')
+  if not page:
+    page = 1
+  else:
+    page = int(page)
+  
+  # Get the popular movies from the TMDB API
+  movies, total_pages = tmdb_api.get_popular_movies(page)
+  
+  return render(request, 'movies/movie_list.html', {
+    'movies': movies,
+    'page': page,
+    'total_pages': total_pages,
+  })
 
 def movie_detail(request, movie_id):
-    movie = get_movie_from_api(movie_id)
+    api_key = os.getenv("TMDB_API_KEY")
+    movie_url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
+    trailer_url = f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={api_key}&language=en-US"
+    download_url = f"https://api.themoviedb.org/3/movie/{movie_id}/download?api_key={api_key}&language=en-US"
+    movie_response = requests.get(movie_url)
+    trailer_response = requests.get(trailer_url)
+    download_response = requests.get(download_url)
+    movie = movie_response.json()
+    trailer = trailer_response.json()
+    download = download_response.json()
     context = {
-        'movie': movie,
+        "movie": movie,
+        "trailer": trailer,
+        "download": download,
     }
-    return render(request, 'movies/movie_detail.html', context)
+    return render(request, "movies/movie_detail.html", context)

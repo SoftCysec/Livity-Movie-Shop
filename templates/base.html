@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -16,30 +16,35 @@
 
 <body style="background-image: url('images/backimage.webp'); background-repeat: no repeat; background-size: cover;">
     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
-        <a class="navbar-brand" href="{% url 'index' %}">Livity Movie Shop</a>
+        <a class="navbar-brand" href="{% url 'myapp:index' %}">Livity Movie Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    <a class="nav-link" href="{% url 'myapp:index' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'movie_list' %}">Movies</a>
+                    <a class="nav-link" href="{% url 'myapp:movie_list' %}">Movies</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                    <a class="nav-link" href="{% url 'myapp:about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    <a class="nav-link" href="{% url 'myapp:contact' %}">Contact</a>
                 </li>
             </ul>
+            <form method="get" action="{% url 'myapp:search' %}" class="form-inline my-2 my-lg-0 ml-auto">
+                <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </nav>
 
     <div class="container mt-5">
-        {% block content %} {% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 
     <!-- Optional JavaScript -->

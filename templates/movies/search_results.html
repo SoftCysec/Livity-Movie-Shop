@@ -10,7 +10,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ movie.title }}</h5>
             <p class="card-text">{{ movie.overview }}</p>
-            <a href="{% url 'movie_detail' movie.id %}" class="btn btn-primary">View Movie</a>
+            <a href="{% url 'myapp:movie_detail' movie_id=movie.id %}" class="btn btn-primary">View Movie</a>
           </div>
         </div>
       </div>
