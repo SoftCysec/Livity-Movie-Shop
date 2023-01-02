@@ -19,8 +19,8 @@
             <div class="card-body">
               <h5 class="card-title" style="font-weight: bolder;">{{ movie.title }}</h5>
               <div class="card-text" id="overview-{{ movie.id }}">
-                {% if movie.overview|length > 48 %}
-                  {{ movie.overview|slice:" 48" }}...
+                {% if movie.overview|length > 40 %}
+                  {{ movie.overview|slice:" 40" }}...
                   <a href="{% url 'myapp:movie_detail' movie.id %}" class="btn btn-primary" onclick="showOverview({{ movie.id }})">View more</a>
                 {% else %}
                   {{ movie.overview }}
