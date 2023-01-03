@@ -3,8 +3,11 @@ certifi==2022.12.7
 charset-normalizer==2.1.1
 Django==4.1.4
 django-jazzmin==2.6.0
+django-otp==1.1.4
+djangorestframework==3.14.0
 idna==3.4
 python-dotenv==0.21.0
+pytz==2022.7
 requests==2.28.1
 sqlparse==0.4.3
 tmdbv3api==1.7.7

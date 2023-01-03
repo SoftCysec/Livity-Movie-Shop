@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import requests
 import os
-
-
 from .utils import tmdb_api
+
 
 def index(request):
   return render(request, 'movies/index.html')
