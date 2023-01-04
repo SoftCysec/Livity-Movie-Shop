@@ -1,5 +1,5 @@
 <!-- base.html -->
-
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -14,46 +14,46 @@
     <title>Livity Movie Shop</title>
 </head>
 
-<body style="background-image: url('images/backimage.webp'); background-repeat: no repeat; background-size: cover;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body style="background-image: url('{% static 'images/back.jpg' %}'); background-repeat: no repeat; background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <a class="navbar-brand" href="{% url 'myapp:index' %}">Livity Movie Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:index' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:about' %}">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:contact' %}">Contact</a>
-            </li>
-            {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:movie_list' %}">Movies</a>
-              </li>
-              <li class="nav-item">
-                <p class="nav-link" style="color: green;font-weight: bolder;">Welcome, {{ user.username }}!</p>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" style="color: red;font-weight: bolder;" href="{% url 'logout' %}">Logout</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'signup' %}">Sign Up</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'login' %}">Login</a>
-              </li>
-            {% endif %}
-          </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:index' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:contact' %}">Contact</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:movie_list' %}">Movies</a>
+                </li>
+                <li class="nav-item">
+                    <p class="nav-link" style="color: green;font-weight: bolder;">Welcome, {{ user.username }}!</p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: red;font-weight: bolder;" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'signup' %}">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
-      </nav>
+    </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-5" style="background-image: url('{% static 'images/back.jpg' %}'); background-repeat: no repeat; background-size: cover;">
         {% block content %} {% endblock %}
     </div>
 
