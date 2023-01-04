@@ -3,7 +3,7 @@ from django.contrib import messages
 import requests
 import os
 from .utils import tmdb_api
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
   return render(request, 'movies/index.html')
@@ -33,6 +33,7 @@ def search(request):
   # Otherwise, display a list of movies
   return render(request, 'movies/movie_list.html', {'movies': movies})
 
+@login_required
 def movie_list(request):
   page = request.GET.get('page')
   if not page:
@@ -49,6 +50,7 @@ def movie_list(request):
     'total_pages': total_pages,
   })
 
+@login_required
 def movie_detail(request, movie_id):
     api_key = os.getenv("TMDB_API_KEY")
     movie_url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
