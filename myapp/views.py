@@ -35,18 +35,11 @@ def search(request):
 
 @login_required
 def movie_list(request):
-  page = request.GET.get('page')
-  if not page:
-    page = 1
-  else:
-    page = int(page)
-  
-  # Get the popular movies from the TMDB API
-  movies, total_pages = tmdb_api.get_popular_movies(page)
+  # Get all movies from the TMDB API
+  movies, total_pages = tmdb_api.get_all_movies()
   
   return render(request, 'movies/movie_list.html', {
     'movies': movies,
-    'page': page,
     'total_pages': total_pages,
   })
 

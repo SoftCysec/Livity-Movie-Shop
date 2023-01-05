@@ -1,36 +1,46 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from accounts.decorators import authenticated_user_required
+from accounts.decorators import login_required
+from accounts.forms import LogInForm, SignUpForm
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+            raw_password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('myapp:index')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-@authenticated_user_required
+
+@login_required
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('myapp:index')
-        else:
-            return render(request, 'login.html', {'error': 'Invalid login'})
+        form = LogInForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('myapp:index')
+            else:
+                messages.error(request, 'Invalid username or password')
     else:
-        return render(request, 'login.html')
+        form = LogInForm()
+    return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
+    return redirect('myapp:index')
+
+
+def cancel_url(request):
     return redirect('myapp:index')

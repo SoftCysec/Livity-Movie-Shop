@@ -17,6 +17,18 @@ class TmdbApi:
       return r.json()['results']
     return []
 
+  def get_all_movies(self, page=1):
+    """Gets all movies from the TMDB API."""
+    params = {
+      'api_key': TMDB_API_KEY,
+      'page': page,
+    }
+    r = requests.get(f'{TMDB_API_URL}/discover/movie', params=params)
+    if r.status_code == 200:
+      data = r.json()
+      return data['results'], data['total_pages']
+    return [], 0
+
   def get_popular_movies(self, page=1):
     """Gets the popular movies from the TMDB API."""
     params = {
