@@ -1,13 +1,14 @@
 <!-- index.html -->
 
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div style="text-align:center; margin-top: 200px;">
+    <h1>Welcome to Movie Shop</h1>
+    <p>Here you can browse and purchase the latest movies from your favorite actors and directors.</p>
+</div>
 
-{% block content %}
-  <h1>Welcome to Movie Shop</h1>
-  <p>Here you can browse and purchase the latest movies from your favorite actors and directors.</p>
 
-  <form action="{% url 'myapp:search' %}" method="get">
+<form action="{% url 'myapp:search' %}" method="get" style="text-align:center;">
     <input type="text" name="query" placeholder="Search for a movie...">
     <button type="submit">Search</button>
-  </form>
+</form>
 {% endblock %}
