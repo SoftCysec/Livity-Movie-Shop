@@ -20,7 +20,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-@login_required
+
 def login_view(request):
     if request.method == 'POST':
         form = LogInForm(request.POST)
