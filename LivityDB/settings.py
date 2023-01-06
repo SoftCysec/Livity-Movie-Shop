@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from dotenv import load_dotenv
+from requests import Response
 
 load_dotenv()
 
@@ -135,3 +136,4 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+Response.headers['Access-Control-Allow-Origin'] = 'https://livitydemba.up.railway.app'
