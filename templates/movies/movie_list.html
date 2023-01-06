@@ -16,7 +16,7 @@
         <div class="col-md-3">
           <div class="card mb-3">
             <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
-            <div class="card-body">
+            <div class="card-body" style="background-color: black;">
               <h5 class="card-title" style="font-weight: bolder;">{{ movie.title }}</h5>
               <div class="card-text" id="overview-{{ movie.id }}">
                 {% if movie.overview|length > 40 %}
