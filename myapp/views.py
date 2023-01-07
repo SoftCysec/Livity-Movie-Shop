@@ -33,7 +33,7 @@ def search(request):
   # Otherwise, display a list of movies
   return render(request, 'movies/movie_list.html', {'movies': movies})
 
-# @login_required
+@login_required
 def movie_list(request):
   # Get all movies from the TMDB API
   movies, total_pages = tmdb_api.get_all_movies()
@@ -43,7 +43,7 @@ def movie_list(request):
     'total_pages': total_pages,
   })
 
-# @login_required
+@login_required
 def movie_detail(request, movie_id):
     api_key = os.getenv("TMDB_API_KEY")
     movie_url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
