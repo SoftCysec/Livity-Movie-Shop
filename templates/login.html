@@ -4,7 +4,7 @@
 
   <div class="container mt-5" style="margin-top: 200px;">
     <h1 class="text-center mb-3">Log In</h1>
-    <form method="post" novalidate style="padding: 50px; border-radius: 50px;height: 450px;">
+    <form method="post" action={% url 'index' %} novalidate style="padding: 50px; border-radius: 50px;height: 450px;">
       {% csrf_token %}
       <div class="form-group row">
         <label for="id_username" class="col-sm-2 col-form-label" style="font-weight: bold;">Username</label>
