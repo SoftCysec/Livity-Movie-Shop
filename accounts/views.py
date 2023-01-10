@@ -24,8 +24,6 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-
-
 def login_view(request):
     if request.user.is_authenticated:
         # user is already logged in, redirect to a suitable page

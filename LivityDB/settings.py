@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from dotenv import load_dotenv
-from requests import Response
 
 load_dotenv()
 
@@ -30,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['livitydemba.up.railway.app','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['livitydemba.up.railway.app','127.0.0.1','localhost','*']
 
 
 
@@ -38,6 +37,7 @@ ALLOWED_HOSTS = ['livitydemba.up.railway.app','127.0.0.1','localhost']
 
 INSTALLED_APPS = [
     'jazzmin',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
-    'accounts',
-    'corsheaders',
+    'accounts',  
 ]
 
 MIDDLEWARE = [
@@ -116,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
