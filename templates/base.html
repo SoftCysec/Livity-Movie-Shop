@@ -32,11 +32,11 @@
                 <li class="nav-item">
                     <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:contact' %}">Contact</a>
                 </li>
-                
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" style="color: black;font-weight: bolder;" href="{% url 'myapp:movie_list' %}">Movies</a>
                 </li>
-                {% if user.is_authenticated %}
+
                 <li class="nav-item">
                     <p class="nav-link" style="color: green;font-weight: bolder;">Welcome, {{ user.username }}!</p>
                 </li>
